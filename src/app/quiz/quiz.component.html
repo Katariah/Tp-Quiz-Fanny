@@ -1,4 +1,16 @@
-<br><br>
-<div class="boutonnvlpartie">
+<div class="bouton-nvl-partie" *ngIf="!currentQuestion">
   <button (click)="newGame()" mat-raised-button color="warn">Nouvelle Partie</button>
+</div>
+
+<div class="question" *ngIf="currentQuestion">
+  <div *ngIf="!displayAnswer">
+    <p>Quelle est la capitale du pays : {{currentQuestion.pays}} ?</p>
+    <app-timer (end)="timeSpent()"></app-timer>
+    <button (click)="answerGiven(prop)" mat-raised-button color="primary" *ngFor="let prop of currentQuestion.propositions">{{prop}}</button>
+  </div>
+  <div class="reponse" *ngIf="displayAnswer">
+    <p>{{found ? "Bien joué !" : "Dommage !"}} La réponse est : {{currentQuestion.capitale}}</p>
+    <button (click)="loadNextQuestion()" mat-raised-button color="primary" *ngIf="hasNext">Question suivante</button>
+    <button mat-raised-button color="primary" *ngIf="!hasNext" routerLink="/score">Voir le score</button>
+  </div>
 </div>

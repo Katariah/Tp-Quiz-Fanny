@@ -16,26 +16,42 @@ export class QuizComponent implements OnInit {
   found: boolean;
   hasNext = true;
   error: string;
+  displayAnswer: boolean;
 
-  constructor(private quizService: QuizService)  { }
+  constructor(private quizService: QuizService) { }
 
   ngOnInit() {
+    this.quizService.buildNewQuiz(10).subscribe(
+      (questions: Question[]) => this.questions = questions)
   }
 
   newGame() {
+    this.quizService.score = 0;
     this.quizService.buildNewQuiz(10).subscribe(
-    (questions: Question[]) => {
-      this.questions = questions;
-      this.loadNextQuestion();
-    },
-    error => console.log(error));
-   }
+      (questions: Question[]) => {
+        this.questions = questions;
+        this.loadNextQuestion();
+      },
+      error => console.log(error));
+  }
 
-  loadNextQuestion() { }
+  loadNextQuestion() {
+    this.currentQuestion = this.questions[this.iQuestion];
+    this.iQuestion++;
+    this.hasNext = this.iQuestion < this.quizService.nbQuestions;
+    this.displayAnswer = false;
+  }
 
-  timeSpent() { }
+  timeSpent() {
+    this.found = false;
+    this.displayAnswer = true;
+  }
 
-  answerGiven(answer: string) { }
+  answerGiven(proposition: string) {
+    this.found = this.currentQuestion.capitale === proposition
+    this.quizService.score += +(this.found);
+    this.displayAnswer = true;
+  }
 
   showAnswer() { }
 

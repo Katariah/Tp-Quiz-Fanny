@@ -1,1 +1,7 @@
-<div class="score"><mat-card>{{score}}</mat-card></div>
+<div class="score">
+    Votre score est de :
+    <br>
+    <mat-card>{{quizService.score}}</mat-card>
+
+    sur {{quizService.nbQuestions}} questions.
+</div>

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { QuizService } from '../quiz.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-score',
@@ -7,12 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ScoreComponent implements OnInit {
 
-  constructor() { }
-  // score: number;
-  score: 9;
+  constructor(public quizService: QuizService, private router: Router) {
+    if (!quizService.score) {
+      router.navigate(['/quiz'])
+    }
+   }
 
   ngOnInit() {
-    // récupère le score depuis quizcomponent
   }
 
 }

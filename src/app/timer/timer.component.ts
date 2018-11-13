@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-timer',
@@ -7,18 +7,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TimerComponent implements OnInit {
 
-  constructor(public counter = 10) {
+  timeleft: number;
+  timeInter: any;
 
-    const traitementRegulier = setInterval(() => {
+  @Output()
+  end = new EventEmitter();
 
-      this.counter = this.counter - 1;
-      console.log(this.counter);
-      if (this.counter === 0) {clearInterval(traitementRegulier)}
+  constructor() { }
+
+  ngOnInit() {
+    this.timeleft = 10;
+    this.timeInter = setInterval(() => {
+      this.timeleft = Math.max(0, this.timeleft - 0.1)
+      if (this.timeleft === 0) {
+        clearInterval(this.timeInter)
+        this.end.emit(null)
+      }
     }, 100);
   }
-
-ngOnInit() {
-}
 
 }
 
