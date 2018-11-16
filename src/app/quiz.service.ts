@@ -22,7 +22,7 @@ export class QuizService {
           this.shuffle(questions);
           const quizQuestions = questions.slice(0, nbQuestions);
           for (const question of quizQuestions) {
-            question.propositions = [question.capitale, ...(this.findThreeRandomPropositionsForContinent(questions, question.continent))];
+            question.propositions = [question.capitale, ...(this.findThreeRandomPropositionsForContinent(questions, question))];
             this.shuffle(question.propositions);
           }
           observer.next(quizQuestions);
@@ -42,11 +42,11 @@ export class QuizService {
     return a;
 }
 
-  private findThreeRandomPropositionsForContinent(questions: Question[], continent: string): string[] {
+  private findThreeRandomPropositionsForContinent(questions: Question[], question: Question): string[] {
     const questionShuffled = this.shuffle(Object.assign([], questions));
     const propositions: string[] = [];
     questionShuffled.forEach(q => {
-      if (propositions.length < 3 && q.continent === continent) {
+      if (propositions.length < 3 && question.continent === q.continent && q.capitale !== question.capitale) {
         propositions.push(q.capitale);
       }
     });

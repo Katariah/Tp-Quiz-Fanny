@@ -12,13 +12,17 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatCardModule} from '@angular/material/card';
 import { QuizService } from './quiz.service';
+import { AdminComponent } from './admin/admin.component';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     QuizComponent,
     ScoreComponent,
-    TimerComponent
+    TimerComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,
@@ -28,7 +32,8 @@ import { QuizService } from './quiz.service';
     MatButtonModule,
     MatToolbarModule,
     MatCardModule,
-    HttpClientModule
+    HttpClientModule,
+    MatCheckboxModule
   ],
   providers: [QuizService],
   bootstrap: [AppComponent]
